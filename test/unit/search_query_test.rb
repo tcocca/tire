@@ -156,9 +156,8 @@ module Tire::Search
           filter :terms, :tags => ['python']
         end
 
-        assert_equal 2, query[:filtered][:filter].size
-        assert_equal( { :tags => ['ruby'] },   query[:filtered][:filter].first[:terms] )
-        assert_equal( { :tags => ['python'] }, query[:filtered][:filter].last[:terms] )
+        assert_equal 1, query[:filtered][:filter].size
+        assert_equal( { :and => [ { :terms => { :tags => ['ruby'] } }, { :terms => { :tags => ['python'] } } ] }, query[:filtered][:filter] )
       end
 
       should "allow passing variables from outer scope" do

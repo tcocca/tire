@@ -120,6 +120,7 @@ module Tire
       end
 
       def to_hash
+        @value.update( { :filter => { :and => @value[:filter].map { |filter| filter.to_hash } } } ) if @value[:filter] && @value[:filter].size > 1
         @value
       end
 

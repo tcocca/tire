@@ -40,6 +40,23 @@ module Tire
         assert_equal 'Two', s.results.first.title
       end
 
+      should "restrict the results with multiple separate filters" do
+        # 2.json > Is tagged "ruby" and has 250 words
+
+        s = Tire.search('articles-test') do
+          query do
+            filtered do
+              query { all }
+              filter :terms, :tags => ['ruby', 'python']
+              filter :range, :words => { :from => '250', :to => '250' }
+            end
+          end
+        end
+
+        assert_equal 1, s.results.count
+        assert_equal 'Two', s.results.first.title
+      end
+
     end
 
   end
